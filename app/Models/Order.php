@@ -28,6 +28,7 @@ use Eloquent as Model;
  * @property double delivery_fee
  * @property string id
  * @property int delivery_address_id
+ * @property int pick_address_id
  * @property string hint
  */
 class Order extends Model
@@ -44,6 +45,7 @@ class Order extends Model
         'hint',
         'payment_id',
         'delivery_address_id',
+        'pick_address_id',
         'delivery_fee',
         'active',
         'driver_id'
@@ -62,6 +64,7 @@ class Order extends Model
         'status' => 'string',
         'payment_id' => 'integer',
         'delivery_address_id' => 'integer',
+        'pick_address_id' => 'integer',
         'delivery_fee'=>'double',
         'active'=>'boolean',
         'driver_id' => 'integer',
@@ -77,6 +80,7 @@ class Order extends Model
         'order_status_id' => 'required|exists:order_statuses,id',
         'payment_id' => 'exists:payments,id',
         'driver_id' => 'nullable|exists:users,id',
+        'pick_address_id' => 'nullable|exists:delivery_addresses,id',
     ];
 
     /**
@@ -164,4 +168,9 @@ class Order extends Model
         return $this->belongsTo(\App\Models\DeliveryAddress::class, 'delivery_address_id', 'id');
     }
     
+
+    public function pickAddress()
+    {
+        return $this->belongsTo(\App\Models\DeliveryAddress::class, 'pick_address_id', 'id');
+    }
 }

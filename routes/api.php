@@ -93,6 +93,13 @@ Route::middleware('auth:api')->group(function () {
     });
     Route::post('users/{id}', 'API\UserAPIController@update');
 
+    Route::get('tripple/driver/{id}', 'OrdersController@driverdetails');
+    Route::get('tripple/pick/{id}', 'OrdersController@pickAddress');
+    Route::get('tripple/driverlocation/{id}/{order_id}','OrdersController@DriverAddress');
+    Route::get('tripple/accountorders/{id}','OrdersController@AccountOrders');
+
+    
+
     Route::resource('order_statuses', 'API\OrderStatusAPIController');
 
     Route::get('payments/byMonth', 'API\PaymentAPIController@byMonth')->name('payments.byMonth');

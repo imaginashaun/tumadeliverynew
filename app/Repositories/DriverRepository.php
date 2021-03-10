@@ -27,6 +27,7 @@ class DriverRepository extends BaseRepository
         'available'
     ];
 
+
     /**
      * Configure the Model
      **/

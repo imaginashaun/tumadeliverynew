@@ -190,4 +190,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('slides', 'SlideController')->except([
         'show'
     ]);
+
 });
+
+Route::get('lee/lee/{id}', 'OrdersController@driverdetails');
