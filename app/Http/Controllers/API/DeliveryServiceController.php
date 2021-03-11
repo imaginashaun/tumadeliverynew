@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\DeliveryAddress;
 
-class OrdersController extends Controller
+class DeliveryServiceController extends Controller
 {
     public function driverdetails($id){
         $driver=  DB::select("SELECT user_id,U.name,D.plate,D.total_orders,D.carimage,D.carmodel FROM drivers D INNER JOIN users U on U.id=D.user_id where  user_id=?",[$id]);
@@ -117,9 +118,4 @@ class OrdersController extends Controller
     
     }
     
-
 }
-
-
-
-

@@ -93,11 +93,11 @@ Route::middleware('auth:api')->group(function () {
     });
     Route::post('users/{id}', 'API\UserAPIController@update');
 
-    Route::get('tripple/driver/{id}', 'OrdersController@driverdetails');
-    Route::get('tripple/pick/{id}', 'OrdersController@pickAddress');
-    Route::get('tripple/driverlocation/{id}/{order_id}','OrdersController@DriverAddress');
-    Route::get('tripple/accountorders/{id}','OrdersController@AccountOrders');
-
+    Route::get('orderdelivery/driver/{id}', 'API\DeliveryServiceController@driverdetails');
+    Route::get('orderdelivery/pick/{id}', 'API\DeliveryServiceController@pickAddress');
+    Route::get('orderdelivery/driverlocation/{id}/{order_id}','API\DeliveryServiceController@DriverAddress');
+    Route::get('orderdelivery/accountorders/{id}','API\DeliveryServiceController@AccountOrders');
+    Route::post('orderdelivery/pickaddress','API\DeliveryServiceController@SavepickAddress');
     
 
     Route::resource('order_statuses', 'API\OrderStatusAPIController');

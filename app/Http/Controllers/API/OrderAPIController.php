@@ -173,7 +173,7 @@ class OrderAPIController extends Controller
                     );
                 } else {
                     $order = $this->orderRepository->create(
-                        $request->only('user_id', 'order_status_id', 'tax', 'delivery_address_id', 'delivery_fee', 'hint')
+                        $request->only('user_id', 'order_status_id', 'tax','pick_address_id', 'delivery_address_id', 'delivery_fee', 'hint')
                     );
                 }
                 foreach ($input['products'] as $productOrder) {
