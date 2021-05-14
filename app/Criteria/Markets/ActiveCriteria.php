@@ -22,6 +22,6 @@ class ActiveCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        return $model->where('markets.active','1');
+        return $model->where('markets.active','1')->where('markets.id', '!=', 5);
     }
 }

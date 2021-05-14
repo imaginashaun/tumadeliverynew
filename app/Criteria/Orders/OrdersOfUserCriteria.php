@@ -10,6 +10,7 @@
 namespace App\Criteria\Orders;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
@@ -24,13 +25,15 @@ class OrdersOfUserCriteria implements CriteriaInterface
      * @var User
      */
     private $userId;
+    private $request;
 
     /**
      * OrdersOfUserCriteria constructor.
      */
-    public function __construct($userId)
+    public function __construct($userId, Request $request)
     {
         $this->userId = $userId;
+        $this->request = $request;
     }
 
     /**
@@ -57,6 +60,15 @@ class OrdersOfUserCriteria implements CriteriaInterface
             return $model->where('orders.user_id', $this->userId)
                 ->groupBy('orders.id');
         } else if (auth()->user()->hasRole('driver')) {
+
+            if($this->request->has('gettingFirst') && $this->request->post('gettingFirst') == 'true'){
+
+
+                return $model->newQuery()->whereNull('orders.driver_id')
+                    ->groupBy('orders.id');
+
+            }
+
             return $model->newQuery()->where('orders.driver_id', $this->userId)
                 ->groupBy('orders.id');
         } else {

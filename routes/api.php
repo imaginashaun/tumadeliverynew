@@ -69,6 +69,8 @@ Route::resource('slides', 'API\SlideAPIController')->except([
 Route::resource('option_groups', 'API\OptionGroupAPIController');
 
 Route::resource('options', 'API\OptionAPIController');
+Route::post('saveuser/driver','DriverMerchantRegistration@savedriver');
+Route::post('saveuser/merchant','DriverMerchantRegistration@savemerchant');
 
 
 
@@ -78,10 +80,12 @@ Route::middleware('auth:api')->group(function () {
             Route::resource('orders', 'API\OrderAPIController');
             Route::resource('notifications', 'API\NotificationAPIController');
             Route::post('users/{id}', 'API\UserAPIController@update');
+            Route::post('acceptOrder/{order_id}', 'API\OrderAPIController@acceptOrder');
             Route::resource('faq_categories', 'API\FaqCategoryAPIController');
             Route::resource('faqs', 'API\FaqAPIController');
         });
     });
+
     Route::group(['middleware' => ['role:manager']], function () {
         Route::prefix('manager')->group(function () {
             Route::post('users/{id}', 'API\UserAPIController@update');
@@ -98,7 +102,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('orderdelivery/driverlocation/{id}/{order_id}','API\DeliveryServiceController@DriverAddress');
     Route::get('orderdelivery/accountorders/{id}','API\DeliveryServiceController@AccountOrders');
     Route::post('orderdelivery/pickaddress','API\DeliveryServiceController@SavepickAddress');
-    
+
 
     Route::resource('order_statuses', 'API\OrderStatusAPIController');
 

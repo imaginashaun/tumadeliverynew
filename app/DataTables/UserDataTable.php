@@ -29,6 +29,12 @@ class UserDataTable extends DataTable
             ->editColumn('updated_at', function ($user) {
                 return getDateColumn($user, 'updated_at');
             })
+            ->editColumn('status', function ($user) {
+
+
+
+                return getBooleanColumn($user, 'status');
+            })
             ->editColumn('role', function ($user) {
                 return getArrayColumn($user->roles,'name');
             })
@@ -97,6 +103,10 @@ class UserDataTable extends DataTable
                 'data' => 'email',
                 'title' => trans('lang.user_email'),
 
+            ],
+            [
+                'data' => 'status',
+                'title' => 'Approved',
             ],
             [
                 'data' => 'role',

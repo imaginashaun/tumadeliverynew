@@ -215,4 +215,5 @@ private $userRepository;
             Log::error($e->getMessage());
         }
     }
+    
 }

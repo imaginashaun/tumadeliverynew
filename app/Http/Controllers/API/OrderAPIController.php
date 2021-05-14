@@ -81,11 +81,13 @@ class OrderAPIController extends Controller
      */
     public function index(Request $request)
     {
+
+
         try {
             $this->orderRepository->pushCriteria(new RequestCriteria($request));
             $this->orderRepository->pushCriteria(new LimitOffsetCriteria($request));
             $this->orderRepository->pushCriteria(new OrdersOfStatusesCriteria($request));
-            $this->orderRepository->pushCriteria(new OrdersOfUserCriteria(auth()->id()));
+            $this->orderRepository->pushCriteria(new OrdersOfUserCriteria(auth()->id(), $request));
         } catch (RepositoryException $e) {
             return $this->sendError($e->getMessage());
         }
@@ -267,6 +269,46 @@ class OrderAPIController extends Controller
             if (isset($input['order_status_id']) && $input['order_status_id'] == 5 && !empty($order)) {
                 $this->paymentRepository->update(['status' => 'Paid'], $order['payment_id']);
             }
+            event(new OrderChangedEvent($oldStatus, $order));
+
+            if (setting('enable_notifications', false)) {
+                if (isset($input['order_status_id']) && $input['order_status_id'] != $oldOrder->order_status_id) {
+                    Notification::send([$order->user], new StatusChangedOrder($order));
+                }
+
+                if (isset($input['driver_id']) && ($input['driver_id'] != $oldOrder['driver_id'])) {
+                    $driver = $this->userRepository->findWithoutFail($input['driver_id']);
+                    if (!empty($driver)) {
+                        Notification::send([$driver], new AssignedOrder($order));
+                    }
+                }
+            }
+
+        } catch (ValidatorException $e) {
+            return $this->sendError($e->getMessage());
+        }
+
+        return $this->sendResponse($order->toArray(), __('lang.saved_successfully', ['operator' => __('lang.order')]));
+    }
+
+
+    public function acceptOrder($order_id, Request $request)
+    {
+        $oldOrder = $this->orderRepository->findWithoutFail($order_id);
+        if (empty($oldOrder)) {
+            return $this->sendError('Order not found');
+        }
+
+        $oldStatus = $oldOrder->payment->status;
+        $input = $request->all();
+
+        try {
+          //  $order = $this->orderRepository->update($input, $order_id);
+
+          //  $this->paymentRepository->update(['order_status_id' => 2], $order_id);
+            $order = $this->orderRepository->update(['order_status_id' => 2,'driver_id' => $input['user']], $order_id);
+
+
             event(new OrderChangedEvent($oldStatus, $order));
 
             if (setting('enable_notifications', false)) {

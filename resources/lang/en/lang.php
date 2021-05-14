@@ -834,7 +834,7 @@ return [
     'markets_payout_note_placeholder' => 'Insert Note',
     'markets_payout_paid_date' => 'Paid Date',
     'markets_payout_paid_date_help' => 'Insert Paid Date',
-    'markets_payout_paid_date_placeholder' => 'Insert Paid Date',
+    'manrkets_payout_paid_date_placeholder' => 'Insert Paid Date',
     'markets_payout_plural' => 'Shops Payouts',
     'markets_payout_market_id' => 'Shop Id',
     'markets_payout_market_id_help' => 'Insert Shop Id',

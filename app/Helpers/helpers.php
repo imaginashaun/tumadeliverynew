@@ -92,6 +92,8 @@ function getPrice($price = 0)
  */
 function getBooleanColumn($column, $attributeName)
 {
+  //  print_r($column);
+  //  die();
     if (isset($column)) {
         if ($column[$attributeName]) {
             return "<span class='badge badge-success'>" . trans('lang.yes') . "</span>";
