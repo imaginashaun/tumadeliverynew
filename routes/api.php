@@ -98,7 +98,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('orderdelivery/driverlocation/{id}/{order_id}','API\DeliveryServiceController@DriverAddress');
     Route::get('orderdelivery/accountorders/{id}','API\DeliveryServiceController@AccountOrders');
     Route::post('orderdelivery/pickaddress','API\DeliveryServiceController@SavepickAddress');
-    
+
+    Route::get('parcels/product/{id}','API\ProductAPIController@parcel');
 
     Route::resource('order_statuses', 'API\OrderStatusAPIController');
 

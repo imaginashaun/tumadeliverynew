@@ -61,6 +61,12 @@ class ProductRepository extends BaseRepository implements CacheableInterface
             ->where('user_markets.user_id', auth()->id())->get();
     }
 
+    public function parcel_product()
+    {
+        return Product::where('name','parcel')->first();
+    }
+
+
     public function groupedByMarkets()
     {
         $products = [];
