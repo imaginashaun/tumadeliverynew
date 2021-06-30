@@ -218,4 +218,21 @@ class ProductAPIController extends Controller
 
     }
 
+
+    public function parcel($id)
+    {
+        $product = $this->productRepository->parcel_product();
+        if (empty($product)) {
+            return $this->sendError('Product not found');
+        }
+        else{
+            return response()->json([
+                "success"=>true,
+                "data"=>$product,
+                "message"=>"Product found"
+            ]);
+        }
+    }
+
+
 }

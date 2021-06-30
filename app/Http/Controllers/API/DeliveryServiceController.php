@@ -73,7 +73,6 @@ class DeliveryServiceController extends Controller
                 "message"=>"Driver Address Not Found!"
             ]);
         }
-    
     }
 
 

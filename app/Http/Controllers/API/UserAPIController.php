@@ -122,9 +122,7 @@ class UserAPIController extends Controller
             $user_field = CustomFieldValue::where('value', $phone)->first();
 
             if($user_field) {
-
-                $user = User::where('id',$user_field->customizable_id)->where('otp', $request->input('otp', ''))->first();
-
+                $user = User::where('id',$user_field->customizable_id)->where('id', $request->input('otp', ''))->first();
            //     $user->device_token = $request->input('device_token', '');
            //     $user->save();
 
