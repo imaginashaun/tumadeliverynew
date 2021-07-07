@@ -65,7 +65,7 @@ class OrdersOfUserCriteria implements CriteriaInterface
 
 
                 return $model->newQuery()->whereNull('orders.driver_id')
-                    ->groupBy('orders.id');
+                    ->groupBy('orders.id')->orWhere('orders.driver_id', auth()->id());
 
             }
 

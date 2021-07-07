@@ -104,14 +104,12 @@ class UserAPIController extends Controller
 
         return $this->sendResponse(0, 'Failed Phone Number');
 
-
     }
 
 
     function loginphone(Request $request)
     {
         try {
-
 
             $phone = $request->input('phone', '');
 
@@ -122,16 +120,20 @@ class UserAPIController extends Controller
             $user_field = CustomFieldValue::where('value', $phone)->first();
 
             if($user_field) {
-                $user = User::where('id',$user_field->customizable_id)->where('id', $request->input('otp', ''))->first();
+
+                $user = User::where('id','=',$user_field->customizable_id)->where('otp', $request->input('otp', ''))->first();
            //     $user->device_token = $request->input('device_token', '');
            //     $user->save();
-
 
 
                 // Authentication passed...
             //    $user = auth()->user();
                 $user->device_token = $request->input('device_token', '');
+
+
+
                 $user->save();
+
                 return $this->sendResponse($user, 'User retrieved successfully');
             }
             return $this->sendResponse(0, 'FAILED');

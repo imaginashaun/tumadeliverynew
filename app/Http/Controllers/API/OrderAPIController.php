@@ -294,12 +294,17 @@ class OrderAPIController extends Controller
 
     public function acceptOrder($order_id, Request $request)
     {
+
+
+//        echo  $this->sendResponse(['ok'=>'k'], __('lang.saved_successfully', ['operator' => __('lang.order')]));
+
+  //      die();
         $oldOrder = $this->orderRepository->findWithoutFail($order_id);
         if (empty($oldOrder)) {
             return $this->sendError('Order not found');
         }
 
-        $oldStatus = $oldOrder->payment->status;
+       // $oldStatus = $oldOrder->payment->status;
         $input = $request->all();
 
         try {
@@ -309,7 +314,7 @@ class OrderAPIController extends Controller
             $order = $this->orderRepository->update(['order_status_id' => 2,'driver_id' => $input['user']], $order_id);
 
 
-            event(new OrderChangedEvent($oldStatus, $order));
+          //  event(new OrderChangedEvent($oldStatus, $order));
 
             if (setting('enable_notifications', false)) {
                 if (isset($input['order_status_id']) && $input['order_status_id'] != $oldOrder->order_status_id) {
