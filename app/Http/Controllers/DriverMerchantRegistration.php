@@ -67,7 +67,7 @@ class DriverMerchantRegistration extends Controller
         $driver->save();
 
 
-      //  return redirect('./login');
+       return redirect('https://tuma.delivery/index.php/user-registered/');
 
 //        echo "WOW";
 //      die();
@@ -108,7 +108,7 @@ class DriverMerchantRegistration extends Controller
 
 
 
-        return redirect('./login');
+        return redirect('https://tuma.delivery/index.php/user-registered/');
 
 //        echo "WOW";
 //      die();
