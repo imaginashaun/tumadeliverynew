@@ -95,6 +95,19 @@ class DriverMerchantRegistration extends Controller
         DB::insert('insert into model_has_roles (role_id, model_type,model_id) values (?, ?, ?)', [3, 'App\Models\User', $user->id]);
 
 
+        $customValues = [
+            'customizable_type'=>'App\Models\User',
+            'custom_field_id'=>4,
+            'value'=>$request->input('phonenumber'),
+            'view'=>$request->input('phonenumber'),
+            'customizable_id'=>$user->id,
+        ];
+
+        $user->customFieldsValues()
+            ->updateOrCreate(['custom_field_id' => $customValues['custom_field_id']], $customValues);
+
+
+
         return redirect('./login');
 
 //        echo "WOW";
